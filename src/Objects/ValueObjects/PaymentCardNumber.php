@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AwesomeObjects\Objects\ValueObjects;
 
 use AwesomeObjects\Enums\PaymentCardType;
-use InvalidArgumentException;
+use AwesomeObjects\Exceptions\InvalidPaymentCardNumberException;
 use Stringable;
 
 final class PaymentCardNumber implements Stringable
@@ -17,22 +17,18 @@ final class PaymentCardNumber implements Stringable
     ) {
         $this->cardNumber = self::validate($cardNumber)
             ? $cardNumber
-            : throw new InvalidArgumentException(
-                "Invalid card number"
-            );
+            : throw new InvalidPaymentCardNumberException();
     }
 
     /**
      * Performs a Luhn check on a payment card number.
      *
-     * @throws InvalidArgumentException
+     * @throws InvalidPaymentCardNumberException
      */
     public static function validate(string $cardNumber): bool
     {
         if (!filter_var($cardNumber, FILTER_VALIDATE_INT)) {
-            throw new InvalidArgumentException(
-                "Card number must be an integer"
-            );
+            throw new InvalidPaymentCardNumberException();
         }
 
         $checkDigit = (int)substr($cardNumber, -1);

@@ -16,14 +16,17 @@ class PaymentCardTest extends TestCase
         $paymentCard = new PaymentCard(
             cardNumber: new PaymentCardNumber('4444333322221111'),
             sortCode: new PaymentCardSortCode('12-34-56'),
-            verificationNumber: new PaymentCardVerification('123', PaymentCardType::VISA),
-            cardHolder: "Mr Stephen Mitchell"
+            verificationNumber: new PaymentCardVerification(
+                '123',
+                PaymentCardType::VISA
+            ),
+            cardHolder: 'Mr Testy McTestface',
         );
 
         $this->assertInstanceOf(PaymentCard::class, $paymentCard);
         $this->assertEquals('4444333322221111', $paymentCard->cardNumber);
         $this->assertEquals('12-34-56', $paymentCard->sortCode);
         $this->assertEquals('123', $paymentCard->verificationNumber);
-        $this->assertEquals('Mr Stephen Mitchell', $paymentCard->cardHolder);
+        $this->assertEquals('Mr Testy McTestface', $paymentCard->cardHolder);
     }
 }

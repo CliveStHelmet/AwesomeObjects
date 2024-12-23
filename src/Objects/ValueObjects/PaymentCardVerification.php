@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AwesomeObjects\Objects\ValueObjects;
 
 use AwesomeObjects\Enums\PaymentCardType;
+use AwesomeObjects\Exceptions\InvalidPaymentCardVerificationException;
 
 final class PaymentCardVerification implements \Stringable
 {
@@ -17,7 +18,7 @@ final class PaymentCardVerification implements \Stringable
         PaymentCardType $cardType
     ) {
         if (!self::validate($cardVerification, $cardType)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidPaymentCardVerificationException(
                 "Invalid card type '{$cardType->value}'"
             );
         }

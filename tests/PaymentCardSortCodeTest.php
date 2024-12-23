@@ -47,7 +47,7 @@ class PaymentCardSortCodeTest extends TestCase
     ): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid sort code');
+        $this->expectExceptionMessage('Sort code must be a six digit integer');
 
         new PaymentCardSortCode("not-a-sort-code");
     }
@@ -56,7 +56,7 @@ class PaymentCardSortCodeTest extends TestCase
     ): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid sort code');
+        $this->expectExceptionMessage('Sort code must be a six digit integer');
 
         new PaymentCardSortCode("1234");
     }
@@ -65,7 +65,7 @@ class PaymentCardSortCodeTest extends TestCase
     ): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid sort code');
+        $this->expectExceptionMessage('Sort code must be a six digit integer');
 
         new PaymentCardSortCode("12345678");
     }

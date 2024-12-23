@@ -3,12 +3,14 @@
 namespace AwesomeObjects\Test;
 
 use AwesomeObjects\Enums\PaymentCardType;
+use AwesomeObjects\Exceptions\InvalidPaymentCardNumberException;
 use AwesomeObjects\Objects\ValueObjects\PaymentCardNumber;
 use PHPUnit\Framework\TestCase;
 
 class PaymentCardNumberTest extends TestCase
 {
-    public function testPaymentCardNumberValidate_ValidNumber_ReturnsTrue(): void
+    public function testPaymentCardNumberValidate_ValidNumber_ReturnsTrue(
+    ): void
     {
         $result = PaymentCardNumber::validate('4444333322221111');
 
@@ -34,8 +36,10 @@ class PaymentCardNumberTest extends TestCase
     public function testPaymentCardNumberObject_InvalidNumber_ExpectInvalidArgumentException(
     ): void
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage("Invalid card number");
+        $this->expectException(InvalidPaymentCardNumberException::class);
+        $this->expectExceptionMessage(
+            "Card number must be a fifteen or sixteen digit integer"
+        );
 
         new PaymentCardNumber('4321432143214321');
     }
@@ -49,8 +53,7 @@ class PaymentCardNumberTest extends TestCase
         $this->assertSame(PaymentCardType::AMEX, $result);
     }
 
-    public function testPaymentCardNumberType_DinersClubCard_ReturnsTrue(
-    ): void
+    public function testPaymentCardNumberType_DinersClubCard_ReturnsTrue(): void
     {
         $cardNumber = new PaymentCardNumber('36700102000000');
         $result = PaymentCardNumber::type($cardNumber);
@@ -58,8 +61,7 @@ class PaymentCardNumberTest extends TestCase
         $this->assertSame(PaymentCardType::DINERS, $result);
     }
 
-    public function testPaymentCardNumberType_DiscoverCard_ReturnsTrue(
-    ): void
+    public function testPaymentCardNumberType_DiscoverCard_ReturnsTrue(): void
     {
         $cardNumber = new PaymentCardNumber('6011000400000000');
         $result = PaymentCardNumber::type($cardNumber);
