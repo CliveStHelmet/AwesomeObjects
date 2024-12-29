@@ -2,10 +2,7 @@
 
 namespace AwesomeObjects\Exceptions;
 
-use AwesomeObjects\Exceptions\InvalidPaymentCardException;
-
-class InvalidPaymentCardVerificationException
-    extends InvalidPaymentCardException
+class PaymentCardException extends \InvalidArgumentException
 {
     public function __construct(
         $message = "",

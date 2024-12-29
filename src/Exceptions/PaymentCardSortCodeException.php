@@ -2,9 +2,9 @@
 
 namespace AwesomeObjects\Exceptions;
 
-use AwesomeObjects\Exceptions\InvalidPaymentCardException;
+use AwesomeObjects\Exceptions\PaymentCardException;
 
-class InvalidPaymentCardSortCodeException extends InvalidPaymentCardException
+class PaymentCardSortCodeException extends PaymentCardException
 {
     public function __construct(
         $message = "Sort code must be a six digit integer",

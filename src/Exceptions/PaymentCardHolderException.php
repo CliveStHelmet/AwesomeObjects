@@ -2,10 +2,10 @@
 
 namespace AwesomeObjects\Exceptions;
 
-class InvalidPaymentCardException extends \InvalidArgumentException
+class PaymentCardHolderException extends PaymentCardException
 {
     public function __construct(
-        $message = "",
+        $message = "Card holder must be comprised of letters and spaces only",
         $code = 0,
         \Exception $previous = null
     ) {

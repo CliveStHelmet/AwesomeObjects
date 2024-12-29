@@ -2,10 +2,13 @@
 
 namespace AwesomeObjects\Exceptions;
 
-class InvalidPaymentCardNumberException extends InvalidPaymentCardException
+use AwesomeObjects\Exceptions\PaymentCardException;
+
+class PaymentCardVerificationException
+    extends PaymentCardException
 {
     public function __construct(
-        $message = "Card number must be a fifteen or sixteen digit integer",
+        $message = "",
         $code = 0,
         \Exception $previous = null
     ) {
