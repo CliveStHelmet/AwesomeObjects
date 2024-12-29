@@ -3,7 +3,7 @@
 namespace AwesomeObjects\Test;
 
 use AwesomeObjects\Enums\PaymentCardType;
-use AwesomeObjects\Exceptions\InvalidPaymentCardNumberException;
+use AwesomeObjects\Exceptions\PaymentCardNumberException;
 use AwesomeObjects\Objects\ValueObjects\PaymentCardNumber;
 use PHPUnit\Framework\TestCase;
 
@@ -36,7 +36,7 @@ class PaymentCardNumberTest extends TestCase
     public function testPaymentCardNumberObject_InvalidNumber_ExpectInvalidArgumentException(
     ): void
     {
-        $this->expectException(InvalidPaymentCardNumberException::class);
+        $this->expectException(PaymentCardNumberException::class);
         $this->expectExceptionMessage(
             "Card number must be a fifteen or sixteen digit integer"
         );

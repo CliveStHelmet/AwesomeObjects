@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AwesomeObjects\Objects\ValueObjects;
 
-use AwesomeObjects\Exceptions\InvalidPaymentCardSortCodeException;
+use AwesomeObjects\Exceptions\PaymentCardSortCodeException;
 use Stringable;
 
 final class PaymentCardSortCode implements Stringable
@@ -15,7 +15,7 @@ final class PaymentCardSortCode implements Stringable
     public function __construct(string $cardSortCode)
     {
         if (!self::validate($cardSortCode)) {
-            throw new InvalidPaymentCardSortCodeException();
+            throw new PaymentCardSortCodeException();
         }
 
         $this->cardSortCode = $cardSortCode;

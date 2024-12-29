@@ -4,6 +4,7 @@ namespace AwesomeObjects\Test;
 
 use AwesomeObjects\Enums\PaymentCardType;
 use AwesomeObjects\Objects\DataTransferObjects\PaymentCard;
+use AwesomeObjects\Objects\ValueObjects\PaymentCardHolder;
 use AwesomeObjects\Objects\ValueObjects\PaymentCardNumber;
 use AwesomeObjects\Objects\ValueObjects\PaymentCardSortCode;
 use AwesomeObjects\Objects\ValueObjects\PaymentCardVerification;
@@ -20,7 +21,7 @@ class PaymentCardTest extends TestCase
                 '123',
                 PaymentCardType::VISA
             ),
-            cardHolder: 'Mr Testy McTestface',
+            cardHolder: new PaymentCardHolder('Mr Testy McTestface'),
         );
 
         $this->assertInstanceOf(PaymentCard::class, $paymentCard);
