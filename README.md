@@ -38,7 +38,7 @@ $paymentCard = new PaymentCard(
     cardNumber: new PaymentCardNumber('4444333322221111'),
     sortCode: new PaymentCardSortCode('12-34-56'),
     verificationNumber: new PaymentCardVerification('123', PaymentCardType::VISA),
-    cardHolder: "Mr Testy McTestface"
+    cardHolder: new PaymentCardHolder("Mr Testy McTestface")
 );
 
 echo $paymentCard->cardNumber // echos "4444333322221111"
