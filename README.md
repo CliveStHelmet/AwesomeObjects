@@ -1,3 +1,4 @@
+![Tests](https://github.com/CliveStHelmet/AwesomeObjects/actions/workflows/php.yml/badge.svg)
 # Awesome Objects
 
 ## About Awesome Objects
@@ -37,12 +38,14 @@ backed by some Value Objects that perform data validation upon instantiation:
 $paymentCard = new PaymentCard(
     cardNumber: new PaymentCardNumber('4444333322221111'),
     sortCode: new PaymentCardSortCode('12-34-56'),
-    verificationNumber: new PaymentCardVerification('123', PaymentCardType::VISA),
-    cardHolder: new PaymentCardHolder("Mr Testy McTestface")
+    expiry: new PaymentCardExpiry(month: '12', year: '24'),
+    cardHolder: new PaymentCardHolder("Mr Testy McTestface"),
+    verificationNumber: new PaymentCardVerification(cardVerification: '123', paymentCardType: PaymentCardType::VISA)
 );
 
 echo $paymentCard->cardNumber // echos "4444333322221111"
 echo $paymentCard->sortCode // echos "12-34-56"
+echo $paymentCard->expiry // echo "12/24"
 echo $paymentCard->verificationNumber // echos "123"
 echo $paymentCard->cardHolder // echos "Mr Testy McTestface"
 ```
