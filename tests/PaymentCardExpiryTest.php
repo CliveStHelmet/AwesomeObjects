@@ -13,7 +13,7 @@ class PaymentCardExpiryTest extends TestCase
     {
         $date = new \DateTimeImmutable("+ 2 years");
         $month = $date->format('m');
-        $year = $date->format('Y');
+        $year = substr($date->format('Y'), -2);
         $expiry = PaymentCardExpiry::validate($month, $year);
 
         $this->assertTrue($expiry);
@@ -21,7 +21,7 @@ class PaymentCardExpiryTest extends TestCase
 
     public function testPaymentCardExpiry_PastDate_ReturnsFalse(): void
     {
-        $expiry = PaymentCardExpiry::validate('4', '2020');
+        $expiry = PaymentCardExpiry::validate('4', '20');
 
         $this->assertFalse($expiry);
     }
@@ -30,14 +30,14 @@ class PaymentCardExpiryTest extends TestCase
     {
         $this->expectException(PaymentCardExpiryException::class);
         $this->expectExceptionMessage("Invalid month");
-        PaymentCardExpiry::validate('00', '2099');
+        PaymentCardExpiry::validate('00', '99');
     }
 
     public function testPaymentCardExpiry_MonthThirteen_ThrowsException(): void
     {
         $this->expectException(PaymentCardExpiryException::class);
         $this->expectExceptionMessage("Invalid month");
-        PaymentCardExpiry::validate('13', '2099');
+        PaymentCardExpiry::validate('13', '99');
     }
 
 
@@ -45,12 +45,12 @@ class PaymentCardExpiryTest extends TestCase
     {
         $this->expectException(PaymentCardExpiryException::class);
         $this->expectExceptionMessage("Invalid month");
-        PaymentCardExpiry::validate('', '2099');
+        PaymentCardExpiry::validate('', '99');
     }
 
     public function testPaymentCardExpiry_ShortMonth_ReturnsTrue(): void
     {
-        $expiry = PaymentCardExpiry::validate('4', '2099');
+        $expiry = PaymentCardExpiry::validate('4', '99');
 
         $this->assertTrue($expiry);
     }
@@ -59,7 +59,7 @@ class PaymentCardExpiryTest extends TestCase
     {
         $this->expectException(PaymentCardExpiryException::class);
         $this->expectExceptionMessage("Invalid month");
-        PaymentCardExpiry::validate('003', '2099');
+        PaymentCardExpiry::validate('003', '99');
     }
 
     public function testPaymentCardExpiry_LongFormatMonth_ThrowsException(
@@ -67,7 +67,7 @@ class PaymentCardExpiryTest extends TestCase
     {
         $this->expectException(PaymentCardExpiryException::class);
         $this->expectExceptionMessage("Invalid month");
-        PaymentCardExpiry::validate('October', '2099');
+        PaymentCardExpiry::validate('October', '99');
     }
 
     public function testPaymentCardExpiry_InvalidYear_ThrowsException(): void
@@ -81,7 +81,7 @@ class PaymentCardExpiryTest extends TestCase
     {
         $date = new \DateTimeImmutable('now');
         $month = $date->format('m');
-        $year = $date->format('Y');
+        $year = substr($date->format('Y'), -2);
         $expiry = PaymentCardExpiry::validate(
             $month,
             $year,
@@ -95,7 +95,7 @@ class PaymentCardExpiryTest extends TestCase
     {
         $date = new \DateTimeImmutable('now');
         $month = $date->format('m');
-        $year = $date->format('Y');
+        $year = substr($date->format('Y'), -2);
 
         $dateToTest = (new \DateTime('+1 month'))
             ->modify('first day of this month');
@@ -114,11 +114,11 @@ class PaymentCardExpiryTest extends TestCase
         $date = (new \DateTimeImmutable('now'))
             ->modify('+2 years');
         $month = $date->format('m');
-        $year = $date->format('Y');
+        $year = substr($date->format('Y'), -2);
         $expiry = new PaymentCardExpiry($month, $year);
 
         $this->assertInstanceOf(PaymentCardExpiry::class, $expiry);
-        $this->assertEquals("$month-$year", $expiry);
+        $this->assertEquals("$month/$year", $expiry);
     }
 
 
@@ -127,7 +127,7 @@ class PaymentCardExpiryTest extends TestCase
         $date = (new \DateTimeImmutable('now'))
             ->modify('-1 year');
         $month = $date->format('m');
-        $year = $date->format('Y');
+        $year = substr($date->format('Y'), -2);
 
         $this->expectException(PaymentCardExpiryException::class);
         $this->expectExceptionMessage("Payment card has expired");

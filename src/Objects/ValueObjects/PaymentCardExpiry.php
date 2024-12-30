@@ -11,7 +11,7 @@ use Stringable;
 final class PaymentCardExpiry implements Stringable
 {
     private const MONTH_REGEX = '/^(?:0[1-9]|1[0-2]|1[0-2]|[1-9])$/';
-    private const YEAR_REGEX = '/^(?:\d{2}|\d{4})$/';
+    private const YEAR_REGEX = '/^\d{2}$/';
     private string $expiry;
 
     public function __construct(
@@ -22,7 +22,7 @@ final class PaymentCardExpiry implements Stringable
             throw new PaymentCardExpiryException("Payment card has expired");
         }
 
-        $this->expiry = sprintf('%s-%s', $this->month, $this->year);
+        $this->expiry = sprintf('%s/%s', $this->month, $this->year);
     }
 
     /**
@@ -47,6 +47,8 @@ final class PaymentCardExpiry implements Stringable
         if (!self::validateYear($year)) {
             throw new PaymentCardExpiryException("Invalid year");
         }
+
+        $year = sprintf('20%s', $year);
 
         try {
             $expiry = \DateTime::createFromFormat(
