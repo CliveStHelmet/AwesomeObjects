@@ -1,5 +1,7 @@
 <?php
 
+namespace AwesomeObjects\Test;
+
 use AwesomeObjects\Exceptions\AlphabeticException;
 use AwesomeObjects\Objects\ValueObjects\PaymentCardHolder;
 use PHPUnit\Framework\TestCase;
