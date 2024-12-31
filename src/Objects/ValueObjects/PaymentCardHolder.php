@@ -5,7 +5,7 @@ namespace AwesomeObjects\Objects\ValueObjects;
 use AwesomeObjects\Abstracts\Alphabetic;
 use AwesomeObjects\Exceptions\PaymentCardHolderException;
 
-class PaymentCardHolder extends Alphabetic
+final class PaymentCardHolder extends Alphabetic
 {
     protected const REGEX = '/[^a-zA-Z ]+/';
     public function __construct(string $cardHolder)
