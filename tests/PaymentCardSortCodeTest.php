@@ -2,6 +2,7 @@
 
 namespace AwesomeObjects\Test;
 
+use AwesomeObjects\Exceptions\PaymentCardException;
 use AwesomeObjects\Objects\ValueObjects\PaymentCardSortCode;
 use PHPUnit\Framework\TestCase;
 
@@ -46,8 +47,8 @@ class PaymentCardSortCodeTest extends TestCase
     public function testPaymentCardSortCodeObject_InvalidString_ThrowsException(
     ): void
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Sort code must be a six digit integer');
+        $this->expectException(PaymentCardException::class);
+        $this->expectExceptionMessage('Invalid sort code: not-a-sort-code');
 
         new PaymentCardSortCode("not-a-sort-code");
     }
@@ -55,8 +56,8 @@ class PaymentCardSortCodeTest extends TestCase
     public function testPaymentCardSortCodeObject_ShortString_ThrowsException(
     ): void
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Sort code must be a six digit integer');
+        $this->expectException(PaymentCardException::class);
+        $this->expectExceptionMessage('Invalid sort code: 1234');
 
         new PaymentCardSortCode("1234");
     }
@@ -64,8 +65,8 @@ class PaymentCardSortCodeTest extends TestCase
     public function testPaymentCardSortCodeObject_LongString_ThrowsException(
     ): void
     {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('Sort code must be a six digit integer');
+        $this->expectException(PaymentCardException::class);
+        $this->expectExceptionMessage('Invalid sort code: 12345678');
 
         new PaymentCardSortCode("12345678");
     }

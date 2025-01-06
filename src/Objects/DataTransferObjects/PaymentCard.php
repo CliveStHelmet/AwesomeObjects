@@ -10,6 +10,13 @@ use AwesomeObjects\Objects\ValueObjects\PaymentCardNumber;
 use AwesomeObjects\Objects\ValueObjects\PaymentCardSortCode;
 use AwesomeObjects\Objects\ValueObjects\PaymentCardVerification;
 
+/**
+ * @property-read PaymentCardNumber $cardNumber
+ * @property-read PaymentCardSortCode $sortCode
+ * @property-read PaymentCardExpiry $expiry
+ * @property-read PaymentCardVerification $verificationNumber
+ * @property-read PaymentCardHolder $cardHolder
+ */
 final class PaymentCard
 {
     public function __construct(

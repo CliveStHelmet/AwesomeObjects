@@ -2,7 +2,7 @@
 
 namespace AwesomeObjects\Test;
 
-use AwesomeObjects\Exceptions\PaymentCardExpiryException;
+use AwesomeObjects\Exceptions\PaymentCardException;
 use AwesomeObjects\Objects\ValueObjects\PaymentCardExpiry;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
@@ -28,23 +28,23 @@ class PaymentCardExpiryTest extends TestCase
 
     public function testPaymentCardExpiry_MonthZero_ThrowsException(): void
     {
-        $this->expectException(PaymentCardExpiryException::class);
-        $this->expectExceptionMessage("Invalid month");
+        $this->expectException(PaymentCardException::class);
+        $this->expectExceptionMessage("Invalid expiry date: 00-99");
         PaymentCardExpiry::validate('00', '99');
     }
 
     public function testPaymentCardExpiry_MonthThirteen_ThrowsException(): void
     {
-        $this->expectException(PaymentCardExpiryException::class);
-        $this->expectExceptionMessage("Invalid month");
+        $this->expectException(PaymentCardException::class);
+        $this->expectExceptionMessage("Invalid expiry date: 13-99");
         PaymentCardExpiry::validate('13', '99');
     }
 
 
     public function testPaymentCardExpiry_EmptyMonth_ThrowsException(): void
     {
-        $this->expectException(PaymentCardExpiryException::class);
-        $this->expectExceptionMessage("Invalid month");
+        $this->expectException(PaymentCardException::class);
+        $this->expectExceptionMessage("Invalid expiry date: -99");
         PaymentCardExpiry::validate('', '99');
     }
 
@@ -57,23 +57,23 @@ class PaymentCardExpiryTest extends TestCase
 
     public function testPaymentCardExpiry_LongMonth_ThrowsException(): void
     {
-        $this->expectException(PaymentCardExpiryException::class);
-        $this->expectExceptionMessage("Invalid month");
+        $this->expectException(PaymentCardException::class);
+        $this->expectExceptionMessage("Invalid expiry date: 003-99");
         PaymentCardExpiry::validate('003', '99');
     }
 
     public function testPaymentCardExpiry_LongFormatMonth_ThrowsException(
     ): void
     {
-        $this->expectException(PaymentCardExpiryException::class);
-        $this->expectExceptionMessage("Invalid month");
+        $this->expectException(PaymentCardException::class);
+        $this->expectExceptionMessage("Invalid expiry date: October-99");
         PaymentCardExpiry::validate('October', '99');
     }
 
     public function testPaymentCardExpiry_InvalidYear_ThrowsException(): void
     {
-        $this->expectException(PaymentCardExpiryException::class);
-        $this->expectExceptionMessage("Invalid year");
+        $this->expectException(PaymentCardException::class);
+        $this->expectExceptionMessage("Invalid expiry date: 01-nineteen ninety nine");
         PaymentCardExpiry::validate('01', 'nineteen ninety nine');
     }
 
@@ -129,8 +129,8 @@ class PaymentCardExpiryTest extends TestCase
         $month = $date->format('m');
         $year = substr($date->format('Y'), -2);
 
-        $this->expectException(PaymentCardExpiryException::class);
-        $this->expectExceptionMessage("Payment card has expired");
+        $this->expectException(PaymentCardException::class);
+        $this->expectExceptionMessage("Invalid expiry date: 01-24");
 
         new PaymentCardExpiry($month, $year);
     }

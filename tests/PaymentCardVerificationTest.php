@@ -3,7 +3,7 @@
 namespace AwesomeObjects\Test;
 
 use AwesomeObjects\Enums\PaymentCardType;
-use AwesomeObjects\Exceptions\PaymentCardVerificationException;
+use AwesomeObjects\Exceptions\PaymentCardException;
 use AwesomeObjects\Objects\ValueObjects\PaymentCardVerification;
 use PHPUnit\Framework\TestCase;
 
@@ -73,8 +73,8 @@ class PaymentCardVerificationTest extends TestCase
     public function testPaymentCardVerificationObject_InvalidNumber_ThrowsException(
     ): void
     {
-        $this->expectException(PaymentCardVerificationException::class);
-        $this->expectExceptionMessage("Invalid card type 'VISA'");
+        $this->expectException(PaymentCardException::class);
+        $this->expectExceptionMessage("Invalid verification code: 1234 for payment card: VISA");
 
         new PaymentCardVerification('1234', PaymentCardType::VISA);
     }

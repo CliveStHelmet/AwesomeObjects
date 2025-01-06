@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AwesomeObjects\Objects\ValueObjects;
 
 use AwesomeObjects\Abstracts\Alphabetic;
-use AwesomeObjects\Exceptions\PaymentCardHolderException;
+use AwesomeObjects\Exceptions\PaymentCardException;
 
 final class PaymentCardHolder extends Alphabetic
 {
@@ -13,9 +15,7 @@ final class PaymentCardHolder extends Alphabetic
         $cardHolder = trim($cardHolder);
 
         if (strlen($cardHolder) === 0) {
-            throw new PaymentCardHolderException (
-                'Card holder name cannot be empty'
-            );
+            throw PaymentCardException::invalidCardHolder($cardHolder);
         }
         parent::__construct($cardHolder);
     }

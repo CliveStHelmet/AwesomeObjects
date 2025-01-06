@@ -4,22 +4,37 @@ declare(strict_types=1);
 
 namespace AwesomeObjects\Objects\ValueObjects;
 
-use AwesomeObjects\Exceptions\PaymentCardExpiryException;
+use AwesomeObjects\Exceptions\PaymentCardException;
 use PHPUnit\Exception;
 use Stringable;
 
+/**
+ * PaymentCardExpiry
+ *
+ * This Value Object provides functionality to validate legitimate expiry dates
+ * on payment cards.
+ *
+ * @package AwesomeObjects.ValueObjects
+ * @author  Stephen Mitchell
+ * @version 1.0
+ * @licence MIT
+ */
 final class PaymentCardExpiry implements Stringable
 {
     private const MONTH_REGEX = '/^(?:0[1-9]|1[0-2]|1[0-2]|[1-9])$/';
     private const YEAR_REGEX = '/^\d{2}$/';
     private string $expiry;
 
+    /**
+     * @param string|int $month
+     * @param string|int $year
+     */
     public function __construct(
         private readonly string|int $month,
         private readonly string|int $year
     ) {
         if (!self::validate($month, $year)) {
-            throw new PaymentCardExpiryException("Payment card has expired");
+            throw PaymentCardException::invalidExpiryDate($month, $year);
         }
 
         $this->expiry = sprintf('%s/%s', $this->month, $this->year);
@@ -33,7 +48,7 @@ final class PaymentCardExpiry implements Stringable
      * @param \DateTimeInterface $date
      *
      * @return bool
-     * @throws PaymentCardExpiryException
+     * @throws PaymentCardException
      */
     public static function validate(
         string $month,
@@ -41,11 +56,11 @@ final class PaymentCardExpiry implements Stringable
         \DateTimeInterface $date = new \DateTimeImmutable()
     ): bool {
         if (!self::validateMonth($month)) {
-            throw new PaymentCardExpiryException("Invalid month");
+            throw PaymentCardException::invalidExpiryDate($month, $year);
         }
 
         if (!self::validateYear($year)) {
-            throw new PaymentCardExpiryException("Invalid year");
+            throw PaymentCardException::invalidExpiryDate($month, $year);
         }
 
         $year = sprintf('20%s', $year);
@@ -57,7 +72,7 @@ final class PaymentCardExpiry implements Stringable
             );
             $expiry->modify("last day of this month");
         } catch (Exception $e) {
-            throw new PaymentCardExpiryException();
+            throw PaymentCardException::invalidExpiryDate($month, $year);
         }
 
         $interval = $date->diff($expiry);
